@@ -2,6 +2,7 @@ const menuBtn = document.getElementById('menu-btn');
   const navbarMenu = document.getElementById('navbar-menu');
 
   // Path Aset (Sesuaikan dengan folder Anda)
+  const menuIcon = document.getElementById('menu-icon');
   const iconHamburger = "../assets/icons/Icon.svg";
   const iconClose = "../assets/icons/x-close.svg"; 
 
@@ -11,16 +12,25 @@ const menuBtn = document.getElementById('menu-btn');
     isOpen = !isOpen;
 
     if (isOpen) {
-      navbarMenu.classList.remove('-translate-y-full'); // Menu Muncul
-      navbarMenu.classList.add('translate-y-0');
-
-      menuIcon.src = iconClose; // Ganti ke ikon silang
-      document.body.style.overflow = 'hidden'; // menu disembunyikan
-    } else {
-      navbarMenu.classList.remove('translate-y-0');
-      navbarMenu.classList.add('-translate-y-full'); // PAKAI MINUS
+      navbarMenu.classList.remove('hidden'); // Menu Muncul
       
-      menuIcon.src = iconHamburger; 
-      document.body.style.overflow = 'auto'; // Ganti balik ke hamburger
+      setTimeout(() => {
+      navbarMenu.classList.replace('-translate-y-full', 'translate-y-0');
+      }, 10);
+
+    if(menuIcon) menuIcon.src = iconClose; 
+    document.body.classList.add('overflow-hidden'); // Pakai class lebih rapi
+    } 
+    
+    else {
+      navbarMenu.classList.replace('translate-y-0', '-translate-y-full');
+    
+    if(menuIcon) menuIcon.src = iconHamburger; 
+    document.body.classList.remove('overflow-hidden');
+
+    // Sembunyikan total setelah animasi selesai (misal durasi 500ms)
+    setTimeout(() => {
+      if (!isOpen) navbarMenu.classList.add('hidden');
+    }, 500);
     }
   });
